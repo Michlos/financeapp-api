@@ -1,5 +1,6 @@
 import { CreateUserUseCase } from '../use-cases/create-user.js';
 import validator from 'validator';
+import { badRequest, created, serverError } from './helpers.js';
 
 export class CreteUserController {
     async execute(httpRequest) {
@@ -16,35 +17,26 @@ export class CreteUserController {
 
             for (const field of requiredFields) {
                 if (!params[field] || params[field].trim().length === 0) {
-                    return {
-                        statusCode: 400,
-                        body: {
-                            errorMessage: `Missing param: ${field}`,
-                        },
-                    };
+                    return badRequest({
+                        message: `Missing param: ${field}`,
+                    });
                 }
             }
 
             //VALIDAR TAMANHO DA SENHA
             if (params.password.length < 6) {
-                return {
-                    statusCode: 400,
-                    body: {
-                        errorMessage: 'Password must be at least 6 characters',
-                    },
-                };
+                return badRequest({
+                    message: 'Password must be at least 6 characters',
+                });
             }
 
             //VALIDAR EMAIL
 
             const emailRegex = validator.isEmail(params.email);
             if (!emailRegex) {
-                return {
-                    statusCode: 400,
-                    body: {
-                        errorMessage: 'Invalid email',
-                    },
-                };
+                return badRequest({
+                    message: 'Invalid email. Please provide a valid email',
+                });
             }
 
             //CHAMAR O USE CASE
@@ -53,17 +45,20 @@ export class CreteUserController {
 
             // RETORNAR A RESPOSTA PARA O USUARIO (STATUS CODE - 2##)
 
-            return {
-                statusCode: 201,
-                body: createdUser,
-            };
+            // return created({
+            //     message: 'User created successfully',
+            //     user: {
+            //         id: createdUser.id,
+            //         first_name: createdUser.first_name,
+            //         last_name: createdUser.last_name,
+            //         email: createdUser.email,
+            //     },
+            // });
+            return created(createdUser);
         } catch (error) {
-            return {
-                statusCode: 500,
-                body: {
-                    errorMessage: `Internal server error ${error.message}`,
-                },
-            };
+            return serverError({
+                message: error.message,
+            });
         }
     }
 }
