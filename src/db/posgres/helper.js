@@ -5,6 +5,7 @@ dotenv.config();
 
 const { Pool } = pg;
 
+//POOL FOR DB CONNECTION
 export const pool = new Pool({
     user: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
@@ -13,6 +14,7 @@ export const pool = new Pool({
     host: process.env.POSTGRES_HOST,
 });
 
+//SEND QUERIES COMMANDS TO POOL CONNECTION
 export const PostgresHelper = {
     query: async (query, params) => {
         const client = await pool.connect();

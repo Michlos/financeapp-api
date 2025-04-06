@@ -1,6 +1,7 @@
 import { CreateUserUseCase } from '../use-cases/create-user.js';
 import validator from 'validator';
 import { badRequest, created, serverError } from './helpers.js';
+import { EmailAlreadyExistsError } from '../errors/user.js';
 
 export class CreteUserController {
     async execute(httpRequest) {
@@ -56,6 +57,11 @@ export class CreteUserController {
             // });
             return created(createdUser);
         } catch (error) {
+            //verificando se erro vem do tratamento de erros customizados
+            if (error instanceof EmailAlreadyExistsError) {
+                return badRequest({ message: error.message });
+            }
+            console.error(error);
             return serverError({
                 message: error.message,
             });
