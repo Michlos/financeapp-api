@@ -14,6 +14,7 @@ export class GetUserByIdController {
                     message: 'Invalid userId. Please provide a valid userId',
                 });
             }
+
             const getUserByIdUseCase = new GetUserByIdUseCase();
             const user = await getUserByIdUseCase.execute(
                 httpRequest.params.userId,

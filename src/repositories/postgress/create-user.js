@@ -1,8 +1,18 @@
 import { PostgresHelper } from '../../db/posgres/helper.js';
+import { PostgresGetUserByEmailRepository } from './get-user-by-email.js';
 
 export class PostgresCreateUserRepository {
     async execute(createUserParams) {
         //create user in postgress
+
+        const postgressGetUserByEmailRepository =
+            new PostgresGetUserByEmailRepository();
+        const userWitthEmail = await postgressGetUserByEmailRepository.execute(
+            createUserParams.email,
+        );
+        if (userWitthEmail) {
+            throw new Error('User Email already exists');
+        }
 
         await PostgresHelper.query(
             'INSERT INTO users (ID, first_name, last_name, email, password) VALUES ($1, $2, $3, $4, $5)',
