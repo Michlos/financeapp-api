@@ -43,18 +43,6 @@ export class CreteUserController {
             //CHAMAR O USE CASE
             const creUserUseCase = new CreateUserUseCase();
             const createdUser = await creUserUseCase.execute(params);
-
-            // RETORNAR A RESPOSTA PARA O USUARIO (STATUS CODE - 2##)
-
-            // return created({
-            //     message: 'User created successfully',
-            //     user: {
-            //         id: createdUser.id,
-            //         first_name: createdUser.first_name,
-            //         last_name: createdUser.last_name,
-            //         email: createdUser.email,
-            //     },
-            // });
             return created(createdUser);
         } catch (error) {
             //verificando se erro vem do tratamento de erros customizados

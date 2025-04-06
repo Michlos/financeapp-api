@@ -18,7 +18,7 @@ export const serverError = (body) => ({
 export const notFound = (body) => ({
     statusCode: 404,
     body: {
-        errorMessage: `Not found ${body.message}`,
+        errorMessage: `Not found: ${body.message}`,
     },
 });
 
