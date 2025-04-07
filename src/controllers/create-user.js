@@ -1,7 +1,12 @@
 import { CreateUserUseCase } from '../use-cases/create-user.js';
-import validator from 'validator';
-import { badRequest, created, serverError } from './helpers.js';
+import { badRequest, created, serverError } from './helpers/http.js';
 import { EmailAlreadyExistsError } from '../errors/user.js';
+import {
+    checkIfEmailIsValid,
+    checkIfPassworIsValid,
+    invalidEmailResponse,
+    invalidPasswordResponse,
+} from './helpers/user.js';
 
 export class CreteUserController {
     async execute(httpRequest) {
@@ -24,20 +29,16 @@ export class CreteUserController {
                 }
             }
 
-            //VALIDAR TAMANHO DA SENHA
-            if (params.password.length < 6) {
-                return badRequest({
-                    message: 'Password must be at least 6 characters',
-                });
+            //VALIDAR TAMANHO DA SENHA]
+            const passwordIsValid = checkIfPassworIsValid(params.password);
+            if (!passwordIsValid) {
+                return invalidPasswordResponse();
             }
 
             //VALIDAR EMAIL
-
-            const emailRegex = validator.isEmail(params.email);
-            if (!emailRegex) {
-                return badRequest({
-                    message: 'Invalid email. Please provide a valid email',
-                });
+            const emailIsValid = checkIfEmailIsValid(params.email);
+            if (!emailIsValid) {
+                return invalidEmailResponse();
             }
 
             //CHAMAR O USE CASE
