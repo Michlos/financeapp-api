@@ -1,5 +1,5 @@
-import { PostgresHelper } from '../../db/posgres/helper.js';
-import { PostgresGetUserByEmailRepository } from './index.js';
+import { PostgresHelper } from '../../../db/posgres/helper.js';
+import { PostgresGetUserByEmailRepository } from '../index.js';
 
 export class PostgresCreateUserRepository {
     async execute(createUserParams) {
