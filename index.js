@@ -30,7 +30,12 @@ app.post('/api/users', async (request, response) => {
 });
 
 app.patch('/api/users/:userId', async (request, response) => {
-    const updateUserController = new controllers.UpdateUserController();
+    const updateUserController = new controllers.UpdateUserController(
+        new usecases.UpdateUserUseCase(
+            new repositories.PostgressUpdateUserRepository(),
+            new repositories.PostgresGetUserByEmailRepository(),
+        ),
+    );
     const { statusCode, body } = await updateUserController.execute(request);
     response.status(statusCode).send(body);
 });

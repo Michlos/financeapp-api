@@ -1,25 +1,17 @@
-import { UpdateUserUseCase } from '../use-cases/index.js';
 import { EmailAlreadyExistsError } from '../errors/user.js';
-import {
-    checkIfEmailIsValid,
-    checkIfIdIsValid,
-    checkIfPassworIsValid,
-    invalidEmailResponse,
-    invalidIdResponse,
-    invalidPasswordResponse,
-    badRequest,
-    serverError,
-    ok,
-} from './helpers/index.js';
+import * as helpers from './helpers/index.js';
 
 export class UpdateUserController {
+    constructor(updateUserUseCase) {
+        this.updateUserUseCase = updateUserUseCase;
+    }
     async execute(httpRequest) {
         try {
             const userId = httpRequest.params.userId;
-            const isIdValid = checkIfIdIsValid(userId);
+            const isIdValid = helpers.checkIfIdIsValid(userId);
 
             if (!isIdValid) {
-                return invalidIdResponse();
+                return helpers.invalidIdResponse();
             }
 
             const params = httpRequest.body;
@@ -37,7 +29,7 @@ export class UpdateUserController {
             );
 
             if (someFieldIsNotAllowed) {
-                return badRequest({
+                return helpers.badRequest({
                     message: 'CTRL: Some provided filed is not allowed.',
                 });
             }
@@ -45,31 +37,35 @@ export class UpdateUserController {
             //VALIDAR TAMANHO DA SENHA
 
             if (params.password) {
-                const passwordIsValid = checkIfPassworIsValid(params.password);
+                const passwordIsValid = helpers.checkIfPassworIsValid(
+                    params.password,
+                );
                 if (!passwordIsValid) {
-                    return invalidPasswordResponse();
+                    return helpers.invalidPasswordResponse();
                 }
             }
 
             //VALIDAR EMAIL
 
             if (params.email) {
-                const emailIsValid = checkIfEmailIsValid(params.email);
+                const emailIsValid = helpers.checkIfEmailIsValid(params.email);
                 if (!emailIsValid) {
-                    return invalidEmailResponse();
+                    return helpers.invalidEmailResponse();
                 }
             }
 
-            const updateUserUseCase = new UpdateUserUseCase();
-            const updatedUser = await updateUserUseCase.execute(userId, params);
-            return ok(updatedUser);
+            const updatedUser = await this.updateUserUseCase.execute(
+                userId,
+                params,
+            );
+            return helpers.ok(updatedUser);
         } catch (error) {
             if (error instanceof EmailAlreadyExistsError) {
-                return badRequest({ message: error.message });
+                return helpers.badRequest({ message: error.message });
             }
 
             console.error(error);
-            return serverError({
+            return helpers.serverError({
                 message: error.message,
             });
         }
