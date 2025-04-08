@@ -1,53 +1,38 @@
-import { GetUserByIdUseCase } from '../use-cases/index.js';
-import {
-    checkIfIdIsValid,
-    invalidIdResponse,
-    ok,
-    serverError,
-    userNotFOundReponse,
-} from './helpers/index.js';
+//import { GetUserByIdUseCase } from '../use-cases/index.js';
+import * as helpers from './helpers/index.js';
 
 export class GetUserByIdController {
+    constructor(getUserByIdUseCase) {
+        this.getUserByIdUseCase = getUserByIdUseCase;
+    }
     async exeucte(httpRequest) {
         try {
             //const { userId } = httpRequest.params.userId;
             //validações
-            const idIsValid = checkIfIdIsValid(httpRequest.params.userId);
+            const idIsValid = helpers.checkIfIdIsValid(
+                httpRequest.params.userId,
+            );
+            console.error(idIsValid);
             if (!idIsValid) {
-                return invalidIdResponse();
+                return helpers.invalidIdResponse();
             }
 
-            const getUserByIdUseCase = new GetUserByIdUseCase();
-            const user = await getUserByIdUseCase.execute(
+            //const getUserByIdUseCase = new GetUserByIdUseCase();
+            const user = await this.getUserByIdUseCase.execute(
                 httpRequest.params.userId,
             );
 
             //VERIFICA ID EXISTENTE
             if (!user) {
-                return userNotFOundReponse();
+                return helpers.userNotFoundReponse();
             }
 
-            return ok(user);
+            return helpers.ok(user);
         } catch (error) {
             console.error(error);
-            return serverError({
+            return helpers.serverError({
                 message: error.message,
             });
         }
     }
-    // async handle(request, response) {
-    //     try {
-    //         const { userId } = request.params.userId;
-
-    //         const getUserByIdUseCase = new GetUserByIdUseCase();
-    //         const user = await getUserByIdUseCase.execute(userId);
-
-    //         return response.status(200).json(user);
-    //     } catch (error) {
-    //         if (error.code === 404) {
-    //             return response.status(404).json(notFound().body);
-    //         }
-    //         return serverError(response, error);
-    //     }
-    // }
 }

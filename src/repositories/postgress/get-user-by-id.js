@@ -9,19 +9,4 @@ export class PostgresGetUserByIdRepository {
 
         return user[0];
     }
-    //   constructor (postgresClient) {
-    //     this.postgresClient = postgresClient
-    //   }
-
-    //   async getUserById (userId) {
-    //     const query = 'SELECT * FROM users WHERE id = $1'
-    //     const values = [userId]
-
-    //     try {
-    //       const result = await this.postgresClient.query(query, values)
-    //       return result.rows[0]
-    //     } catch (error) {
-    //       throw new Error('Error retrieving user by ID')
-    //     }
-    //   }
 }
