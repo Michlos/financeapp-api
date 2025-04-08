@@ -22,7 +22,12 @@ app.get('/api/users/:userId', async (request, response) => {
 
 //DEFINE THE ROUTES TO API, REQUESTS AND RESPONSES
 app.post('/api/users', async (request, response) => {
-    const createUserController = new controllers.CreteUserController();
+    const createUserController = new controllers.CreteUserController(
+        new usecases.CreateUserUseCase(
+            new repositories.PostgresCreateUserRepository(),
+            new repositories.PostgresGetUserByEmailRepository(),
+        ),
+    );
 
     const { statusCode, body } = await createUserController.execute(request);
 
