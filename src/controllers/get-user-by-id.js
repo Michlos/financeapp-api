@@ -4,7 +4,7 @@ import {
     invalidIdResponse,
     ok,
     serverError,
-    notFound,
+    userNotFOundReponse,
 } from './helpers/index.js';
 
 export class GetUserByIdController {
@@ -24,9 +24,7 @@ export class GetUserByIdController {
 
             //VERIFICA ID EXISTENTE
             if (!user) {
-                return notFound({
-                    message: 'UserID not found',
-                });
+                return userNotFOundReponse();
             }
 
             return ok(user);

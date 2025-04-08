@@ -19,6 +19,7 @@ import 'dotenv/config.js';
 import express from 'express';
 import {
     CreteUserController,
+    DeleUserController,
     GetUserByIdController,
     UpdateUserController,
 } from './src/controllers/index.js';
@@ -26,15 +27,6 @@ import {
 const app = express();
 
 app.use(express.json());
-
-//DEFINE THE ROUTES TO API, REQUESTS AND RESPONSES
-app.post('/api/users', async (request, response) => {
-    const createUserController = new CreteUserController();
-
-    const { statusCode, body } = await createUserController.execute(request);
-
-    response.status(statusCode).json(body);
-});
 
 // //GET USER BY ID
 // app.get('/api/users/:userId', async (request, response) => {
@@ -53,9 +45,24 @@ app.get('/api/users/:userId', async (request, response) => {
     response.status(statusCode).send(body);
 });
 
+//DEFINE THE ROUTES TO API, REQUESTS AND RESPONSES
+app.post('/api/users', async (request, response) => {
+    const createUserController = new CreteUserController();
+
+    const { statusCode, body } = await createUserController.execute(request);
+
+    response.status(statusCode).json(body);
+});
+
 app.patch('/api/users/:userId', async (request, response) => {
     const updateUserController = new UpdateUserController();
     const { statusCode, body } = await updateUserController.execute(request);
+    response.status(statusCode).send(body);
+});
+
+app.delete('/api/users/:userId', async (request, response) => {
+    const deleteUserController = new DeleUserController();
+    const { statusCode, body } = await deleteUserController.execute(request);
     response.status(statusCode).send(body);
 });
 

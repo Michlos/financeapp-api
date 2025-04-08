@@ -1,4 +1,4 @@
-import { PostgresHelper } from '../../db/posgres/helper';
+import { PostgresHelper } from '../../db/posgres/helper.js';
 
 export class PostgresDeleteUserRepository {
     async execute(userId) {
