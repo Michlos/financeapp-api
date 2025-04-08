@@ -17,9 +17,11 @@
 // app.listen(process.env.PORT, () => console.log('listeningn in port 3000'));
 import 'dotenv/config.js';
 import express from 'express';
-import { CreteUserController } from './src/controllers/create-user.js';
-import { GetUserByIdController } from './src/controllers/get-user-by-id.js';
-import { UpdateUserController } from './src/controllers/update-user.js';
+import {
+    CreteUserController,
+    GetUserByIdController,
+    UpdateUserController,
+} from './src/controllers/index.js';
 
 const app = express();
 
