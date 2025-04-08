@@ -34,20 +34,3 @@ export class CreateUserUseCase {
         return createdUser;
     }
 }
-
-///CODE FEATUREDS COMMENTED BY DEV
-
-//FUNCTION: INSERT USER IN DATABASE
-//HOW IT WORKDER: USE ALL PROPERTIES OF THE USER OBJECT
-//FEAUTRED: Use the parameter aggregator of properties from the PostgresCreateUserRepository
-// class called createUserParams, which brings all the necessary parameters of the User object.
-// This avoids the need to modify the classes that call the object's queries when there are changes
-// to the User class. If there is an addition of properties to the User class, only the
-// PostgresCreateUserRepository class and the User class will need to be modified, not the calling classes.
-// const user = {
-//     ID: userId,
-//     // first_name: createUserParams.first_name,
-//     // last_name: createUserParams.last_name,
-//     // email: createUserParams.email,
-//     password: hashedPassword,
-// };

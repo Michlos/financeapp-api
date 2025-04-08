@@ -1,8 +1,6 @@
 import 'dotenv/config.js';
 import express from 'express';
-import * as controllers from './src/controllers/index.js';
-import * as usecases from './src/use-cases/index.js';
-import * as repositories from './src/repositories/postgress/index.js';
+import * as user from './src/factories/controlllers/user.js';
 
 const app = express();
 
@@ -10,47 +8,28 @@ app.use(express.json());
 
 // //GET USER BY ID
 app.get('/api/users/:userId', async (request, response) => {
-    const getUserByIdController = new controllers.GetUserByIdController(
-        new usecases.GetUserByIdUseCase(
-            new repositories.PostgresGetUserByIdRepository(),
-        ),
-    );
+    const getUserByIdController = user.makeGetUserByIdController();
     const { statusCode, body } = await getUserByIdController.exeucte(request);
-
     response.status(statusCode).send(body);
 });
 
-//DEFINE THE ROUTES TO API, REQUESTS AND RESPONSES
+// //CREATE USER
 app.post('/api/users', async (request, response) => {
-    const createUserController = new controllers.CreteUserController(
-        new usecases.CreateUserUseCase(
-            new repositories.PostgresCreateUserRepository(),
-            new repositories.PostgresGetUserByEmailRepository(),
-        ),
-    );
-
+    const createUserController = user.makeCreateUserController();
     const { statusCode, body } = await createUserController.execute(request);
-
     response.status(statusCode).json(body);
 });
 
+// //UPDATE USER
 app.patch('/api/users/:userId', async (request, response) => {
-    const updateUserController = new controllers.UpdateUserController(
-        new usecases.UpdateUserUseCase(
-            new repositories.PostgressUpdateUserRepository(),
-            new repositories.PostgresGetUserByEmailRepository(),
-        ),
-    );
+    const updateUserController = user.makeUpdateUserController();
     const { statusCode, body } = await updateUserController.execute(request);
     response.status(statusCode).send(body);
 });
 
+// //DELETE USER
 app.delete('/api/users/:userId', async (request, response) => {
-    const deleteUserController = new controllers.DeleUserController(
-        new usecases.DeleUserUseCase(
-            new repositories.PostgresDeleteUserRepository(),
-        ),
-    );
+    const deleteUserController = user.makeDeleteUserController();
     const { statusCode, body } = await deleteUserController.execute(request);
     response.status(statusCode).send(body);
 });
