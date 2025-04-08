@@ -1,4 +1,4 @@
-import * as helpers from './helpers/index.js';
+import * as helpers from '../helpers/index.js';
 
 export class DeleUserController {
     constructor(deleteUserUseCase) {

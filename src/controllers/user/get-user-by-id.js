@@ -1,5 +1,5 @@
 //import { GetUserByIdUseCase } from '../use-cases/index.js';
-import * as helpers from './helpers/index.js';
+import * as helpers from '../helpers/index.js';
 
 export class GetUserByIdController {
     constructor(getUserByIdUseCase) {
