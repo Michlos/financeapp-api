@@ -1,4 +1,4 @@
-import { PostgresGetUserByIdRepository } from '../repositories/postgress/get-user-by-id.js';
+import { PostgresGetUserByIdRepository } from '../repositories/postgress/index.js';
 export class GetUserByIdUseCase {
     async execute(userId) {
         const getUserByIdRepository = new PostgresGetUserByIdRepository();
