@@ -1,33 +1,27 @@
-import { DeleUserUseCase } from '../use-cases/index.js';
-import {
-    checkIfIdIsValid,
-    invalidIdResponse,
-    ok,
-    serverError,
-    userNotFoundReponse,
-} from './helpers/index.js';
+import * as helpers from './helpers/index.js';
 
 export class DeleUserController {
+    constructor(deleteUserUseCase) {
+        this.deleteUserUseCase = deleteUserUseCase;
+    }
     async execute(httpRequest) {
         try {
             const userId = httpRequest.params.userId;
-            const isIsValid = checkIfIdIsValid(userId);
+            const isIsValid = helpers.checkIfIdIsValid(userId);
             if (!isIsValid) {
-                return invalidIdResponse();
+                return helpers.invalidIdResponse();
             }
 
-            const deleteUserUseCase = new DeleUserUseCase();
-
-            const deletedUser = await deleteUserUseCase.execute(userId);
+            const deletedUser = await this.deleteUserUseCase.execute(userId);
 
             if (!deletedUser) {
-                return userNotFoundReponse();
+                return helpers.userNotFoundReponse();
             }
 
-            return ok(deletedUser);
+            return helpers.ok(deletedUser);
         } catch (error) {
             console.error(error);
-            return serverError();
+            return helpers.serverError();
         }
     }
 }

@@ -7,12 +7,10 @@ export class GetUserByIdController {
     }
     async exeucte(httpRequest) {
         try {
-            //const { userId } = httpRequest.params.userId;
-            //validações
             const idIsValid = helpers.checkIfIdIsValid(
                 httpRequest.params.userId,
             );
-            console.error(idIsValid);
+
             if (!idIsValid) {
                 return helpers.invalidIdResponse();
             }
