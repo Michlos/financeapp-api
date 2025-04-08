@@ -1,6 +1,6 @@
 import 'dotenv/config.js';
 import express from 'express';
-import * as user from './src/factories/controlllers/user.js';
+import * as user from './src/factories/controllers/user.js';
 
 const app = express();
 

@@ -17,7 +17,6 @@ export class CreateTransactionController {
                 'amout',
                 'type',
             ];
-
             for (const field in requiredFields) {
                 if (!params[field] || params[field].trim().length == 0) {
                     return helpers.badRequest({
@@ -25,8 +24,6 @@ export class CreateTransactionController {
                     });
                 }
             }
-
-            //FIM DA VALIDAÇÃO DE CAMPOS OBRIGATÓRIOS
 
             //VALIDANDO ID DO USUÁRIO SE É VÁLIDO
             const userIdIsValid = helpers.checkIfIdIsValid(params.user_id);
