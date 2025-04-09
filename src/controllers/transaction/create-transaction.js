@@ -10,15 +10,18 @@ export class CreateTransactionController {
 
             //VALIDAÇÃO DE CAMPOS OBRIGATÓRIOS
             const requiredFields = [
-                'id',
                 'user_id',
                 'name',
                 'date',
-                'amout',
+                'amount',
                 'type',
             ];
-            for (const field in requiredFields) {
-                if (!params[field] || params[field].trim().length == 0) {
+
+            for (const field of requiredFields) {
+                if (
+                    !params[field] ||
+                    params[field].toString().trim().length === 0
+                ) {
                     return helpers.badRequest({
                         message: `Missing param: ${field}`,
                     });
@@ -31,18 +34,21 @@ export class CreateTransactionController {
                 return helpers.invalidIdResponse();
             }
 
-            //VALIDAR AMOUT
-            if (params.amout <= 0) {
+            //VALIDAR AMOUNT
+            if (params.amount <= 0) {
                 return helpers.badRequest({
-                    message: 'The amout must be reater than 0.',
+                    message: 'The amount must be greater than 0.',
                 });
             }
-            const amoutIsValid = validator.isCurrency(params.amout.toString(), {
-                digits_after_decimal: [2],
-                allow_negatives: false,
-                decimal_separator: '.',
-            });
-            if (!amoutIsValid) {
+            const amountIsValid = validator.isCurrency(
+                params.amount.toString(),
+                {
+                    digits_after_decimal: [2],
+                    allow_negatives: false,
+                    decimal_separator: '.',
+                },
+            );
+            if (!amountIsValid) {
                 return helpers.badRequest({
                     message: 'The amout must be a valid currency.',
                 });
@@ -60,7 +66,7 @@ export class CreateTransactionController {
             }
 
             const transaction = await this.createTransactionUseCase.execute(
-                ...params,
+                params,
                 type,
             );
 
