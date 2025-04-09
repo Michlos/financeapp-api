@@ -16,13 +16,12 @@ export class CreteUserController {
                 'email',
                 'password',
             ];
-
-            for (const field of requiredFields) {
-                if (!params[field] || params[field].trim().length === 0) {
-                    return helpers.badRequest({
-                        message: `Missing param: ${field}`,
-                    });
-                }
+            const { ok: requiredFieldsWereProvided, missingField } =
+                helpers.validateRequiredFields(params, requiredFields);
+            if (!requiredFieldsWereProvided) {
+                return helpers.badRequest({
+                    message: `The field ${missingField} is required.`,
+                });
             }
 
             //VALIDAR TAMANHO DA SENHA]
