@@ -19,9 +19,7 @@ export class CreateTransactionController {
             const { ok: requiredFieldsWereProvided, missingField } =
                 helpers.validateRequiredFields(params, requiredFields);
             if (!requiredFieldsWereProvided) {
-                return helpers.badRequest({
-                    message: `The field ${missingField} is required.`,
-                });
+                return helpers.reuiqredFieldIsMissingResponse(missingField);
             }
 
             //VALIDANDO ID DO USUÁRIO SE É VÁLIDO
