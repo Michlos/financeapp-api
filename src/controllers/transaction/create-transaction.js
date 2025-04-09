@@ -1,5 +1,4 @@
 import * as helpers from '../helpers/index.js';
-import validator from 'validator';
 export class CreateTransactionController {
     constructor(createTransactionUseCase) {
         this.createTransactionUseCase = createTransactionUseCase;
@@ -19,7 +18,7 @@ export class CreateTransactionController {
             const { ok: requiredFieldsWereProvided, missingField } =
                 helpers.validateRequiredFields(params, requiredFields);
             if (!requiredFieldsWereProvided) {
-                return helpers.reuiqredFieldIsMissingResponse(missingField);
+                return helpers.requiredFieldIsMissingResponse(missingField);
             }
 
             //VALIDANDO ID DO USUÁRIO SE É VÁLIDO
@@ -29,34 +28,16 @@ export class CreateTransactionController {
             }
 
             //VALIDAR AMOUNT
-            if (params.amount <= 0) {
-                return helpers.badRequest({
-                    message: 'The amount must be greater than 0.',
-                });
-            }
-            const amountIsValid = validator.isCurrency(
-                params.amount.toString(),
-                {
-                    digits_after_decimal: [2],
-                    allow_negatives: false,
-                    decimal_separator: '.',
-                },
-            );
+            const amountIsValid = helpers.checkIfAmountIsValid(params.amount);
             if (!amountIsValid) {
-                return helpers.badRequest({
-                    message: 'The amout must be a valid currency.',
-                });
+                return helpers.invalidAmoutResponse();
             }
 
             //VALIDANDO TYPE
             const type = params.type.trim().toUpperCase();
-            const typeIsValid = ['EARNING', 'EXPENSE', 'INVESTMENT'].includes(
-                type,
-            );
+            const typeIsValid = helpers.checkIfTypeIsValid(type);
             if (!typeIsValid) {
-                return helpers.badRequest({
-                    message: 'The type must be EARNING, EXPENSE or INVESTMENT.',
-                });
+                return helpers.invalidTypeResponse();
             }
 
             const transaction = await this.createTransactionUseCase.execute(
