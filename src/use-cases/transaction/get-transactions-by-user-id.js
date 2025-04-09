@@ -10,7 +10,7 @@ export class GetTransactionsByparams {
     async execute(params) {
         const user = await this.getUserByIdRepository.execute(params.userId);
         if (!user) {
-            return helpers.userNotFoundReponse(params.userId);
+            throw new helpers.UserNotFoundError(params.userId);
         }
         const transactions =
             await this.getTransactionsByUserIdRepository.execute(params.userId);
