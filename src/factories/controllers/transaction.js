@@ -24,6 +24,18 @@ export const makeGetTransactionsByUserIdController = () => {
 
     return getTransactionsByUserIdController;
 };
+
+export const makeUpdateTransactionController = () => {
+    const updateTransactionController =
+        new controllers.UpdateTransactionController(
+            new usecases.UpdateTransactionUseCase(
+                new repositories.PostgresUpdateTransactionRepository(),
+                new repositories.PostgresGetTransactionByIdRepository(),
+            ),
+        );
+
+    return updateTransactionController;
+};
 // export const makeCreateTransactionController = () => {
 //     const createTransactionRepository =
 //         new repositories.PostgresCreateTransactionRepository();
