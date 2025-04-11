@@ -1,4 +1,4 @@
-import { UserNotFoundError } from '../../errors/user.js';
+import * as errors from '../../errors/index.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export class CreateTransactionUseCase {
@@ -13,7 +13,7 @@ export class CreateTransactionUseCase {
         const user = await this.getUserByIdRepository.execute(userId);
 
         if (!user) {
-            throw new UserNotFoundError(userId);
+            throw new errors.UserNotFoundError(userId);
         }
 
         const transactionId = uuidv4();

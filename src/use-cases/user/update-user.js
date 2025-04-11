@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { EmailAlreadyExistsError } from '../../errors/user.js';
+import * as errors from '../../errors/index.js';
 
 export class UpdateUserUseCase {
     constructor(updateUserRepository, getUserByEmailRepository) {
@@ -19,7 +19,9 @@ export class UpdateUserUseCase {
                     updateUserParams.email,
                 );
             if (userWithProviderEmail && userWithProviderEmail.id != userId) {
-                throw new EmailAlreadyExistsError(updateUserParams.email);
+                throw new errors.EmailAlreadyExistsError(
+                    updateUserParams.email,
+                );
             }
         }
 

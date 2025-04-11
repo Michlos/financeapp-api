@@ -1,4 +1,4 @@
-import { EmailAlreadyExistsError } from '../../errors/user.js';
+import * as errors from '../../errors/index.js';
 import * as helpers from '../helpers/index.js';
 
 export class CreteUserController {
@@ -41,7 +41,7 @@ export class CreteUserController {
             return helpers.created(createdUser);
         } catch (error) {
             //verificando se erro vem do tratamento de erros customizados
-            if (error instanceof EmailAlreadyExistsError) {
+            if (error instanceof errors.EmailAlreadyExistsError) {
                 return helpers.badRequest({ message: error.message });
             }
             console.error(error);

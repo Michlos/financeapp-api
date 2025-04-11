@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-import { EmailAlreadyExistsError } from '../../errors/user.js';
+import * as errors from '../../errors/index.js';
 
 export class CreateUserUseCase {
     constructor(creteUserRepository, getUserByEmailRepository) {
@@ -12,7 +12,7 @@ export class CreateUserUseCase {
         const userWithProviderEmail =
             await this.getUserByEmailRepository.execute(createUserParams.email);
         if (userWithProviderEmail) {
-            throw new EmailAlreadyExistsError(createUserParams.email);
+            throw new errors.EmailAlreadyExistsError(createUserParams.email);
         }
 
         //gerar ID UUID do usuário

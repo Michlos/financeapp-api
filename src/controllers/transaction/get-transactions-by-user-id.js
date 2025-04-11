@@ -1,5 +1,5 @@
 import * as helpers from '../helpers/index.js';
-import * as errors from '../../errors/user.js';
+import * as errors from '../../errors/index.js';
 
 export class GetTransactionsByUserIdController {
     constructor(getTransactionsByUserIdUseCase) {

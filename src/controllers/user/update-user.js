@@ -1,4 +1,4 @@
-import { EmailAlreadyExistsError } from '../../errors/user.js';
+import * as errors from '../../errors/index.js';
 import * as helpers from '../helpers/index.js';
 
 export class UpdateUserController {
@@ -60,7 +60,7 @@ export class UpdateUserController {
             );
             return helpers.ok(updatedUser);
         } catch (error) {
-            if (error instanceof EmailAlreadyExistsError) {
+            if (error instanceof errors.EmailAlreadyExistsError) {
                 return helpers.badRequest({ message: error.message });
             }
 
