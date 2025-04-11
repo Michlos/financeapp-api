@@ -19,7 +19,10 @@ export class PostgresGetUserBalanceRepository {
         try {
             const balance = await PostgresHelper.query(query, values);
             //return balance.rows[0].balance;
-            return balance[0];
+            return {
+                userId,
+                ...balance[0],
+            };
         } catch (error) {
             console.error('Error getting user balance:', error);
             throw new Error('Database error');
