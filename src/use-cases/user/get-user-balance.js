@@ -5,15 +5,14 @@ export class GetUserBalanceUseCase {
         this.getUserBalanceRepository = getUserBalanceRepository;
         this.getUserByIdRepository = getUserByIdRepository;
     }
-    async execute(params) {
-        const user = await this.getUserByIdRepository.execute(params.userId);
+    async execute(userId) {
+        const user = await this.getUserByIdRepository.execute(userId);
         if (!user) {
-            throw new errors.UserNotFoundError(params.userId);
+            console.log('error in usecase');
+            throw new errors.UserNotFoundError(userId);
         }
 
-        const balance = await this.getUserBalanceRepository.execute(
-            params.userId,
-        );
+        const balance = await this.getUserBalanceRepository.execute(userId);
 
         return balance;
     }

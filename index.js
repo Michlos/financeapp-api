@@ -21,6 +21,14 @@ app.post('/api/users', async (request, response) => {
     response.status(statusCode).json(body);
 });
 
+// //GET USER BALANCE
+app.get('/api/users/:userId/balance', async (request, response) => {
+    const getUserBalanceController = user.makeGetUserBalanceController();
+    const { statusCode, body } =
+        await getUserBalanceController.execute(request);
+    response.status(statusCode).send(body);
+});
+
 // //UPDATE USER
 app.patch('/api/users/:userId', async (request, response) => {
     const updateUserController = user.makeUpdateUserController();

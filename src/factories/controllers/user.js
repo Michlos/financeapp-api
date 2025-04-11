@@ -44,3 +44,14 @@ export const makeDeleteUserController = () => {
     );
     return deleteUserController;
 };
+
+//GET USER BALANCE
+export const makeGetUserBalanceController = () => {
+    const getUserBalanceController = new controllers.GetUserBalanceController(
+        new usecases.GetUserBalanceUseCase(
+            new repositories.PostgresGetUserBalanceRepository(),
+            new repositories.PostgresGetUserByIdRepository(),
+        ),
+    );
+    return getUserBalanceController;
+};

@@ -7,7 +7,7 @@ export class GetUserBalanceController {
     }
 
     async execute(httpRequest) {
-        const { userId } = httpRequest.params;
+        const userId = httpRequest.params.userId;
         try {
             const idIsValid = helpers.checkIfIdIsValid(userId);
             if (!idIsValid) {
@@ -18,10 +18,10 @@ export class GetUserBalanceController {
 
             return helpers.ok(balance);
         } catch (error) {
+            console.error(error);
             if (error instanceof errors.UserNotFoundError) {
                 return helpers.userNotFoundReponse(userId);
             }
-            console.error(error);
             return helpers.serverError();
         }
     }
