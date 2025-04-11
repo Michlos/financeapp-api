@@ -17,7 +17,7 @@ export const checkIfTypeIsValid = (type) => {
     return validTypes.includes(type);
 };
 
-export const invalidAmoutResponse = () => {
+export const invalidAmountResponse = () => {
     return badRequest({
         message: 'HLP Ctrl: The amount must be a valid currency.',
     });
