@@ -62,6 +62,14 @@ app.patch('/api/transactions/:transactionId', async (request, response) => {
     response.status(statusCode).send(body);
 });
 
+app.delete('/api/transactions/:transactionId', async (request, response) => {
+    const deleteTransactionController =
+        transaction.makeDeleteTransactionController();
+    const { statusCode, body } =
+        await deleteTransactionController.execute(request);
+    response.status(statusCode).send(body);
+});
+
 app.listen(process.env.PORT, () =>
     console.log(`Listening on port ${process.env.PORT}`),
 );

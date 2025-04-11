@@ -35,6 +35,17 @@ export const makeUpdateTransactionController = () => {
 
     return updateTransactionController;
 };
+
+export const makeDeleteTransactionController = () => {
+    const deleteTransactionController =
+        new controllers.DeleteTransactionController(
+            new usecases.DeleteTransactionUseCase(
+                new repositories.PostgresDeleteTransactionRepository(),
+            ),
+        );
+
+    return deleteTransactionController;
+};
 // export const makeCreateTransactionController = () => {
 //     const createTransactionRepository =
 //         new repositories.PostgresCreateTransactionRepository();

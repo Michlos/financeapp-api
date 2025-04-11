@@ -53,10 +53,11 @@ export class UpdateTransactionController {
                     transactionId,
                     updateTransactionParams,
                 );
-
+            //VALIDA SE A TRANSACTION FOI ENCONTRADA
             if (!updatedTransaction) {
                 return helpers.transactionNotFoundResponde();
             }
+            //VALIDA SE A TRANSACTION FOI ATUALIZADA
             return helpers.ok(updatedTransaction);
         } catch (error) {
             console.error(error);

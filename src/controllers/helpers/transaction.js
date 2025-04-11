@@ -28,7 +28,7 @@ export const invalidTypeResponse = () => {
     });
 };
 
-export const transactionNotFoundResponde = () => {
+export const transactionNotFoundResponse = () => {
     return badRequest({
         message: 'Transaction not found.',
     });
