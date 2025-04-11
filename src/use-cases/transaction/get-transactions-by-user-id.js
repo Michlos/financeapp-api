@@ -1,6 +1,6 @@
 import * as helpers from '../../controllers/helpers/index.js';
 
-export class GetTransactionsByparams {
+export class GetTransactionsByUserIdUseCase {
     constructor(getTransactionsByUserIdRepository, getUserByIdRepository) {
         this.getTransactionsByUserIdRepository =
             getTransactionsByUserIdRepository;

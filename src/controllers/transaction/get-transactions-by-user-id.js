@@ -1,7 +1,7 @@
 import * as helpers from '../helpers/index.js';
 import * as errors from '../../errors/user.js';
 
-export class GetTransactionsByUserId {
+export class GetTransactionsByUserIdController {
     constructor(getTransactionsByUserIdUseCase) {
         this.getTransactionsByUserIdUseCase = getTransactionsByUserIdUseCase;
     }

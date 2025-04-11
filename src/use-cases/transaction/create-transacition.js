@@ -22,7 +22,6 @@ export class CreateTransactionUseCase {
             ...createTransactionParams,
             id: transactionId,
         });
-
         return transaction;
     }
 }

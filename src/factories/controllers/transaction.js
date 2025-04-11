@@ -13,6 +13,17 @@ export const makeCreateTransactionController = () => {
     return createTransactionController;
 };
 
+export const makeGetTransactionsByUserIdController = () => {
+    const getTransactionsByUserIdController =
+        new controllers.GetTransactionsByUserIdController(
+            new usecases.GetTransactionsByUserIdUseCase(
+                new repositories.PostgresGetTransactionsByUserIdRepository(),
+                new repositories.PostgresGetUserByIdRepository(),
+            ),
+        );
+
+    return getTransactionsByUserIdController;
+};
 // export const makeCreateTransactionController = () => {
 //     const createTransactionRepository =
 //         new repositories.PostgresCreateTransactionRepository();

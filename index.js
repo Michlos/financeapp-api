@@ -44,6 +44,15 @@ app.post('/api/transactions', async (request, response) => {
     response.status(statusCode).send(body);
 });
 
+// //GET TRANSACTIONS BY USER ID
+app.get('/api/transactions', async (request, response) => {
+    const getTransactionsByUserIdController =
+        transaction.makeGetTransactionsByUserIdController();
+    const { statusCode, body } =
+        await getTransactionsByUserIdController.execute(request);
+    response.status(statusCode).send(body);
+});
+
 app.listen(process.env.PORT, () =>
     console.log(`Listening on port ${process.env.PORT}`),
 );
