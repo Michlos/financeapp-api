@@ -30,7 +30,6 @@ export const makeUpdateTransactionController = () => {
         new controllers.UpdateTransactionController(
             new usecases.UpdateTransactionUseCase(
                 new repositories.PostgresUpdateTransactionRepository(),
-                new repositories.PostgresGetTransactionByIdRepository(),
             ),
         );
 

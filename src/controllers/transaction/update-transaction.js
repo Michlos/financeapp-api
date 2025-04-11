@@ -5,7 +5,7 @@ export class UpdateTransactionController {
         this.updateTransactionUseCase = updateTransactionUseCase;
     }
 
-    async handle(httpRequest) {
+    async execute(httpRequest) {
         const { transactionId } = httpRequest.params;
         const updateTransactionParams = httpRequest.body;
 
@@ -53,6 +53,10 @@ export class UpdateTransactionController {
                     transactionId,
                     updateTransactionParams,
                 );
+
+            if (!updatedTransaction) {
+                return helpers.transactionNotFoundResponde();
+            }
             return helpers.ok(updatedTransaction);
         } catch (error) {
             console.error(error);

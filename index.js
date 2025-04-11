@@ -53,6 +53,15 @@ app.get('/api/transactions', async (request, response) => {
     response.status(statusCode).send(body);
 });
 
+// //UPDATE TRANSACTION
+app.patch('/api/transactions/:transactionId', async (request, response) => {
+    const updateTransactionController =
+        transaction.makeUpdateTransactionController();
+    const { statusCode, body } =
+        await updateTransactionController.execute(request);
+    response.status(statusCode).send(body);
+});
+
 app.listen(process.env.PORT, () =>
     console.log(`Listening on port ${process.env.PORT}`),
 );

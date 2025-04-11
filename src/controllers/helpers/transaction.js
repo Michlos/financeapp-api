@@ -27,3 +27,9 @@ export const invalidTypeResponse = () => {
         message: 'The type must be EARNING, EXPENSE or INVESTMENT.',
     });
 };
+
+export const transactionNotFoundResponde = () => {
+    return badRequest({
+        message: 'Transaction not found.',
+    });
+};
